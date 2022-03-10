@@ -1,8 +1,9 @@
-import { useRecoilState } from "recoil";
-import { loadingState, imagesState } from "./state/images";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { loadingState, imagesState, lengthOfImages } from "./state/images";
 function App() {
   const [images, setImages] = useRecoilState(imagesState);
   const [loading, setLoading] = useRecoilState(loadingState);
+  const hasEven = useRecoilValue(lengthOfImages);
 
   const fetchImages = async () => {
     setLoading(true);
@@ -24,6 +25,7 @@ function App() {
             Fetch Images
           </button>
           {loading && <h1>loading...</h1>}
+          <h1>Fetched {hasEven} Images</h1>
           <div className="flex-center image-wrapper">
             {images.map(({ download_url, id, author }) => (
               <img className="image" key={id} src={download_url} alt={author} />
